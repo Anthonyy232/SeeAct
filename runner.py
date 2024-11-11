@@ -17,7 +17,7 @@ os.environ["GEMINI_API_KEY"] = get_api(filename)
 async def run_agent():
     agent = SeeActAgent(
         model="gemini-1.5-flash",
-        default_task="Register an accoutn with both username and password as test. Then login and then change my password to test2.",
+        default_task="Register an account with both username and password as test. Then login and then change my password to test2.",
         default_website="http://localhost/",
         rate_limit=15
     )

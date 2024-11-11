@@ -210,6 +210,24 @@ class GeminiEngine(Engine):
             messages=prompt_input,
             max_tokens=max_new_tokens if max_new_tokens else 4096,
             temperature=temperature if temperature else self.temperature,
+            safety_settings=[
+                                {
+                                    "category": "HARM_CATEGORY_HARASSMENT",
+                                    "threshold": "BLOCK_NONE",
+                                },
+                                {
+                                    "category": "HARM_CATEGORY_HATE_SPEECH",
+                                    "threshold": "BLOCK_NONE",
+                                },
+                                {
+                                    "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+                                    "threshold": "BLOCK_NONE",
+                                },
+                                {
+                                    "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+                                    "threshold": "BLOCK_NONE",
+                                },
+                            ],
             **kwargs,
         )
         return [choice["message"]["content"] for choice in response.choices][0]
