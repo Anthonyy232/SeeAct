@@ -1,5 +1,6 @@
 import asyncio
 import os
+from time import sleep
 
 from seeact_package.seeact.agent import SeeActAgent
 
@@ -17,7 +18,7 @@ os.environ["GEMINI_API_KEY"] = get_api(filename)
 async def run_agent():
     agent = SeeActAgent(
         model="gemini-1.5-flash",
-        default_task="Register an account with both username and password as test. Then login and then change my password to test2.",
+        default_task="Log into my account with username: test, password: test. Then, enter my information and change my password to test2",
         default_website="http://localhost/",
         rate_limit=15
     )
@@ -25,6 +26,7 @@ async def run_agent():
     while not agent.complete_flag:
         prediction_dict = await agent.predict()
         await agent.execute(prediction_dict)
+        sleep(5)
     await agent.stop()
 
 

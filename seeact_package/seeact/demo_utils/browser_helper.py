@@ -320,16 +320,17 @@ async def get_interactive_elements_with_playwright(page,viewport_size):
     seen_elements = set()
     tasks = []
 
-
     for selector in interactive_elements_selectors:
-        locator = page.locator(selector)
-        element_count = await locator.count()
-        for index in range(element_count):
-            element = locator.nth(index)
-            tag_name = selector
-            task = get_element_data(element, tag_name,viewport_size)
-
-            tasks.append(task)
+        try:
+            locator = page.locator(selector)
+            element_count = await locator.count()
+            for index in range(element_count):
+                element = locator.nth(index)
+                tag_name = selector
+                task = get_element_data(element, tag_name, viewport_size)
+                tasks.append(task)
+        except Exception as e:
+            print(f"Playwright error occurred while processing selector '{selector}': {e}")
 
     results = await asyncio.gather(*tasks)
 
